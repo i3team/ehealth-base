@@ -16,7 +16,15 @@ Nhiệm vụ của `TableComponent` là layout và handle các logic cần thi�
 ### Props
 Name | Type | Default | Description
 :--- | :--- | :--- | :---
-`dataList` | array of selectable <sub>(1)</sub> shape | | classes của withStyles
+`dataList` | array of selectable <sup>(*)</sup> shape | | data cho table
+
+<sup>(*)</sup>: 
+```jsx
+dataList: PropTypes.arrayOf(PropTypes.shape({
+            isSelected: PropTypes.bool.isRequired,
+            data: PropTypes.object.isRequired,
+        })).isRequired
+```
 
 # BaseButton
 
