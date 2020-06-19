@@ -13,6 +13,10 @@ Trong đó có các phần chính như:
 
 Nhiệm vụ của `TableComponent` là layout và handle các logic cần thiết
 
+### Props
+Name | Type | Default | Description
+:--- | :--- | :--- | :---
+`dataList` | array of selectable <sub>(1)</sub> shape | | classes của withStyles
 
 # BaseButton
 
