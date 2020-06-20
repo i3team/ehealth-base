@@ -100,8 +100,9 @@ _customRenderMap.set('id', row => <b style={{color: 'red'}}>#{row.data.id}</b>)
 [Code](./BaseButton.jsx)
 
 Chúng ta đã có [`BaseAction`](https://github.com/i3team/general#1-baseaction) được sử dụng khi muốn tập trung logic vào một component, nhưng cách render ở từng trường hợp sử dụng lại khác nhau
-Và đây là `BaseButton`, được sử dụng để implement một số Button có chức năng đặc biệt, được sử dụng nhiều lần và có một số logic chung, chẳng hạn như:
-- logic thể hiện nút đó có được render hay không (abstract method `isApplicable() : boolean`)
+Và đây là `BaseButton`, được sử dụng để implement một số Button có chức năng đặc biệt, được sử dụng nhiều lần và có một số logic chung
+Một số method cần chú ý (những method khác thì là cơ bản của button, ko đáng chú ý)
+- `isApplicable() : boolean` : abstract, return `true` thì được render
 
 <i>Sẽ được update thêm</i>
 
@@ -112,4 +113,10 @@ Trong quá trình dev, `BaseButton` sẽ có nhiều implementation (component k
 ### BaseTableButton
 [Code](./BaseTableButton.jsx)
 Là các nút sẽ được dùng ở Bottom drawer của TableComponent, các nút này sẽ thực hiện hành động trên các hàng được check ở table, tuy nhiên không có nghĩa là hàng nào được chọn thì cũng được apply hành động đó, các hàng được chọn sẽ được filter ra
+Một số method cần chú ý:
+- `isItemApplicable(item: object) : boolean` : abstract, return `true` thì hành động này sẽ tác động lên hàng đó, `false` thì bị "cho ra rìa"
+- `actionName() : string` : abstract, tên hành động VD như: Gửi, Duyệt, Trình ký, Hủy, Xóa, ...
+- `rowUnitName() : string` : virtual : tên đơn vị của hàng VD như: thuốc, ....
+
+
 
