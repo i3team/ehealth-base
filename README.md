@@ -21,11 +21,12 @@ Name | Type | Default | Description
 `customRenderMap` | `Map` of custom render | | 
 `filterComponent` | node | | phần React node render filter
 `onClickSearch` | func | | callback khi nhấn nút search
+`onSort` | props này của Table (xem [Table](https://github.com/i3team/i3-table))
 `currentOrderBy` | props này của Table (xem [Table](https://github.com/i3team/i3-table))
 `getRowKey`| props này của Table (xem [Table](https://github.com/i3team/i3-table))
-`onSort` | props này của Table (xem [Table](https://github.com/i3team/i3-table))
 `pageType` | number | | giá trị của enum EPageType
 `selectable` | bool | false | true thì sẽ handle checkbox và bottom drawer
+`buttons` | node |  | buttons ở bottom drawer
 
 <sup>(*)</sup>
 ```jsx
@@ -41,6 +42,59 @@ columnConfig: PropTypes.arrayOf(PropTypes.shape({
     headCellProps: PropTypes.object
 })).isRequired
 ```
+
+### Code
+```jsx
+import { createColumn } from '~/general/tableConfig.js';
+// createColumn làm hàm nhận vào các parameter để trả về một object config cho một column
+// createColumn = (index, key, title, isVisible, headCellProps = null) => ({ index, key, title, isVisible, headCellProps });
+
+let _columnConfig = [
+    createColumn(1, 'id', 'ID', true, {
+        sortable: true,
+        orderBy: 'abc'
+    }),
+    createColumn(2, 'name', 'Name', true),
+    createColumn(3, 'age', 'Age', true),
+    createColumn(4, 'city', 'City', true),        
+]
+
+let _customRenderMap = new Map();
+// custom render trường `id`
+_customRenderMap.set('id', row => <b style={{color: 'red'}}>#{row.data.id}</b>)
+
+<TableComponent
+    filterComponent={(
+        <b>
+            filter
+        </b>
+    )}
+    onClickSearch={() => {
+        // bắn api search
+    }}
+    onSort={(sort) => {
+       
+    }}
+    currentOrderBy={'Id'}
+    selectable
+    getRowKey={row => row.data.id}
+    pageType={EPageType.Test}
+    dataList={dataList}
+    columnConfig={_columnConfig}
+    customRenderMap={_customRenderMap}
+    buttons={(
+        <Fragment>
+            <EHealthButton width="120px" variant="solid" margin={["no", "no", "no", "md"]}>
+                Duyệt
+            </EHealthButton>
+            <EHealthButton width="120px" variant="outlined" margin={["no", "no", "no", "md"]}>
+                Hủy
+            </EHealthButton>
+        </Fragment>
+    )}
+/>
+```
+
 
 # BaseButton
 
