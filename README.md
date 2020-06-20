@@ -112,6 +112,7 @@ Trong quá trình dev, `BaseButton` sẽ có nhiều implementation (component k
 
 ### BaseTableButton
 [Code](./BaseTableButton.jsx)
+
 Là các nút sẽ được dùng ở Bottom drawer của TableComponent, các nút này sẽ thực hiện hành động trên các hàng được check ở table, tuy nhiên không có nghĩa là hàng nào được chọn thì cũng được apply hành động đó, các hàng được chọn sẽ được filter ra
 Một số method cần chú ý:
 - `isItemApplicable(item: object) : boolean` : abstract, return `true` thì hành động này sẽ tác động lên hàng đó, `false` thì bị "cho ra rìa"
