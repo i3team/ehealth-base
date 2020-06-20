@@ -97,5 +97,6 @@ _customRenderMap.set('id', row => <b style={{color: 'red'}}>#{row.data.id}</b>)
 
 
 # BaseButton
+Chúng ta đã có `BaseAction`(https://github.com/i3team/general#1-baseaction)
 
 # BaseTableButton
