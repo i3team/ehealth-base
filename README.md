@@ -9,7 +9,7 @@ Trong đó có các phần chính như:
 - Nút tìm kiếm
 - Nút chỉnh sửa cột
 - Table chính
-- Bottom Action Drawer (sẽ nói sau)
+- Bottom Action Drawer (để hiểu là cái gì, truy cập [Link2.0](http://link2.i3solution.net.au/Search) sau đó check một vài checkbox hoặc check all để xem)
 
 Nhiệm vụ của `TableComponent` là layout và handle các logic cần thiết
 
@@ -97,11 +97,19 @@ _customRenderMap.set('id', row => <b style={{color: 'red'}}>#{row.data.id}</b>)
 
 
 # BaseButton
+[Code](./BaseButton.jsx)
+
 Chúng ta đã có [`BaseAction`](https://github.com/i3team/general#1-baseaction) được sử dụng khi muốn tập trung logic vào một component, nhưng cách render ở từng trường hợp sử dụng lại khác nhau
 Và đây là `BaseButton`, được sử dụng để implement một số Button có chức năng đặc biệt, được sử dụng nhiều lần và có một số logic chung, chẳng hạn như:
-- logic thể hiện nút đó có được render hay không
-<i>123</i>
+- logic thể hiện nút đó có được render hay không (abstract method `isApplicable() : boolean`)
 
-Trong quá trình dev, `BaseButton` sẽ có rất nhiều implementation (component kế thừa nó) khác nhau
+<i>Sẽ được update thêm</i>
 
-# BaseTableButton
+Trong quá trình dev, `BaseButton` sẽ có nhiều implementation (component kế thừa nó) khác nhau được tạo ra
+
+## Một số implementation cơ bản
+
+### BaseTableButton
+[Code](./BaseTableButton.jsx)
+Là các nút sẽ được dùng ở Bottom drawer của TableComponent, các nút này sẽ thực hiện hành động trên các hàng được check ở table, tuy nhiên không có nghĩa là hàng nào được chọn thì cũng được apply hành động đó, các hàng được chọn sẽ được filter ra
+
