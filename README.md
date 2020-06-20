@@ -97,6 +97,11 @@ _customRenderMap.set('id', row => <b style={{color: 'red'}}>#{row.data.id}</b>)
 
 
 # BaseButton
-Chúng ta đã có [`BaseAction`](https://github.com/i3team/general#1-baseaction)
+Chúng ta đã có [`BaseAction`](https://github.com/i3team/general#1-baseaction) được sử dụng khi muốn tập trung logic vào một component, nhưng cách render ở từng trường hợp sử dụng lại khác nhau
+Và đây là `BaseButton`, được sử dụng để implement một số Button có chức năng đặc biệt, được sử dụng nhiều lần và có một số logic chung, chẳng hạn như:
+- logic thể hiện nút đó có được render hay không
+<i>123</i>
+
+Trong quá trình dev, `BaseButton` sẽ có rất nhiều implementation (component kế thừa nó) khác nhau
 
 # BaseTableButton
