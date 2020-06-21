@@ -7,7 +7,8 @@ class BaseTableButton extends BaseButton {
         super(props);
     }
     static propTypes = {
-        selectedItems: PropTypes.array.isRequired
+        selectedItems: PropTypes.array.isRequired,
+        callback: PropTypes.func,
     }
     isApplicable() {
         return this.props.selectedItems.some(item => this.isItemApplicable(item));
