@@ -122,5 +122,42 @@ Một số method cần chú ý:
 - `actionName() : string` : abstract, tên hành động VD như: Gửi, Duyệt, Trình ký, Hủy, Xóa, ...
 - `rowUnitName() : string` : virtual : tên đơn vị của hàng VD như: thuốc, ....
 
+###### Props
+Name | Type | Default | Description
+:--- | :--- | :--- | :---
+`selectedItems`* | array | `[]` | list các hàng đã được check ở Table
+`callback` | func | | `callback` được gọi sau khi hành động được thực hiện
+
+Ví dụ có một button là `Xóa đơn`, và điều kiện để một hàng (đơn) bị xóa là trạng thái là 2
+```jsx
+class DeleteOrderButton extends BaseTableButton {
+    variant() {
+        return "solid";
+    }
+    rowUnitName() {
+        return "Đơn";
+    }
+    actionName() {
+        return "Xóa";
+    }
+    isItemApplicable(order){
+        return order.status == 2;
+    }
+    _deleteOrders = () => {
+        const { selectedItems, callback } = this.props;
+        this.ajaxPost({
+            url: '~/DeleteOrders',
+            data: selectedItems,
+            success: (ack) => {
+                typeof callback === 'function' && callback(ack.data);
+            }
+        })
+    }
+    onClick() {
+        this._deleteOrders();
+    }
+}
+```
+
 
 
