@@ -16,7 +16,9 @@ Nhiệm vụ của `TableComponent` là layout và handle các logic cần thi�
 ### Props
 Name | Type | Default | Description
 :--- | :--- | :--- | :---
-`dataList` | array of selectable shape <sup>(*)</sup> | | data cho table
+`groupedData` | array of grouped  <sup>(*)</sup> | | data cho table ở dạng grouped
+`renderFooterCells` | | |
+`renderHeaderCells` | | |
 `columnConfig` | array of columnConfigShape <sup>(*)</sup> | | config về thứ cột, ... 
 `customRenderMap` | `Map` of custom render | | 
 `filterComponent` | node | | phần React node render filter
@@ -79,7 +81,7 @@ _customRenderMap.set('id', row => <b style={{color: 'red'}}>#{row.data.id}</b>)
     selectable
     getRowKey={row => row.data.id}
     pageType={EPageType.Test}
-    dataList={dataList}
+    groupedData={groupedData}
     columnConfig={_columnConfig}
     customRenderMap={_customRenderMap}
     buttons={(
