@@ -128,6 +128,7 @@ Một số method cần chú ý:
 Name | Type | Default | Description
 :--- | :--- | :--- | :---
 `selectedItems`* | array | `[]` | list các hàng đã được check ở Table
+`closeDrawer`* | func | `[]` | tắt bottom drawer
 `callback` | func | | `callback` được gọi sau khi hành động được thực hiện
 
 Ví dụ có một button là `Xóa đơn`, và điều kiện để một hàng (đơn) bị xóa là trạng thái là 2
