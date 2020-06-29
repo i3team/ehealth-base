@@ -32,10 +32,11 @@ Name | Type | Default | Description
 
 <sup>(*)</sup>
 ```jsx
-dataList: PropTypes.arrayOf(PropTypes.shape({
-            isSelected: PropTypes.bool.isRequired,
-            data: PropTypes.object.isRequired,
-        })).isRequired,
+groupedData: PropTypes.arrayOf(PropTypes.shape({
+            key: PropTypes.string.isRequired,
+            data: PropTypes.any.isRequired,
+            items: PropTypes.array
+        }))
 columnConfig: PropTypes.arrayOf(PropTypes.shape({
     index: PropTypes.number.isRequired,
     key: PropTypes.string.isRequired,
