@@ -29,6 +29,7 @@ Name | Type | Default | Description
 `pageType` | number | | giá trị của enum EPageType
 `selectable` | bool | false | true thì sẽ handle checkbox và bottom drawer
 `buttons` | node |  | buttons ở bottom drawer
+`canEditColumnConfig` | boolean | `false` | `true` thì hiện nút sắp xếp cột
 
 <sup>(*)</sup>
 ```jsx
