@@ -30,6 +30,8 @@ Name | Type | Default | Description
 `selectable` | bool | false | true thì sẽ handle checkbox và bottom drawer
 `buttons` | node |  | buttons ở bottom drawer
 `canEditColumnConfig` | boolean | `false` | `true` thì hiện nút sắp xếp cột
+`canGroupByColumn` | boolean | `false` | `true` thì hiện dropdown chọn gom nhóm theo cột
+`onGroupByColumn` | func |  | callback sau khi chọn gom nhóm theo cột
 
 <sup>(*)</sup>
 ```jsx
@@ -39,22 +41,50 @@ groupedData: PropTypes.arrayOf(PropTypes.shape({
             items: PropTypes.array
         }))
 columnConfig: PropTypes.arrayOf(PropTypes.shape({
-    index: PropTypes.number.isRequired,
-    key: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    isVisible: PropTypes.bool.isRequired,
-    headCellProps: PropTypes.object
+    index: PropTypes.number.isRequired, // thứ tự sắp xếp cột
+    key: PropTypes.string.isRequired, // key từ object data
+    title: PropTypes.string.isRequired, // tiêu đề cột
+    isVisible: PropTypes.bool.isRequired, // hiển thị
+    options: PropTypes.object // (1)
 })).isRequired
 ```
+(1) `options` (trước đó là `headCellProps`, chỉ là thêm trường `id`) chứa các props của `HeadCell` của `I3FullTable` và `id` của column `{id, ...headCellProps}`. `id` của column sẽ được lấy từ enum cho việc gom nhóm theo cột, theo đó, khi một table cần chức năng gom nhóm theo cột thì phải định nghĩa ra 1 enum (cả C# lẫn js) với giá trị là number đại diện cho column muốn group, 
+
+Ở js thì tạo object enum trong object `ETableColumnId` ở file `enum.js`
+VD:
+```jsx
+export const ETableColumnId = {
+    Test: {
+        ConsumableId: 1,
+        Status: 2,
+        Quantity: 3,
+        ConsumableOrderId: 4,
+    },
+    ... object mới ở đây
+}
+```
+```csharp
+
+public enum Test
+{
+    ConsumableId = 1,
+    Status = 2,
+    Quantity = 3,
+    ConsumableOrderId = 4,
+}
+```
+
+Table chỉ cung cấp chức năng chọn cột để gom nhóm, sẽ gọi callback ra ngoài và component sử dụng table sẽ tự động bắn api lấy dữ liệu đã được gom nhóm về.
 
 ### Code
 ```jsx
 import { createColumn } from '~/general/tableConfig.js';
 // createColumn làm hàm nhận vào các parameter để trả về một object config cho một column
-// createColumn = (index, key, title, isVisible, headCellProps = null) => ({ index, key, title, isVisible, headCellProps });
+// createColumn = (index, key, title, isVisible, options = null) => ({ index, key, title, isVisible, options });
 
 let _columnConfig = [
     createColumn(1, 'id', 'ID', true, {
+        id: ETableColumnId.Test.ConsumableId,
         sortable: true,
         orderBy: 'abc'
     }),
@@ -62,7 +92,7 @@ let _columnConfig = [
     createColumn(3, 'age', 'Age', true),
     createColumn(4, 'city', 'City', true),        
 ]
-
+// theo code trên thì table có khả năng gom nhóm theo consumable id
 let _customRenderMap = new Map();
 // custom render trường `id`
 _customRenderMap.set('id', row => <b style={{color: 'red'}}>#{row.data.id}</b>)
