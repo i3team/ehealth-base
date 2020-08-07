@@ -17,8 +17,8 @@ Nhiệm vụ của `TableComponent` là layout và handle các logic cần thi�
 Name | Type | Default | Description
 :--- | :--- | :--- | :---
 `groupedData` | array of grouped  <sup>(*)</sup> | | data cho table ở dạng grouped
-`renderFooterCells` | | |
-`renderHeaderCells` | | |
+`renderFooterCells` | func(row, index, visibleColumnsLength, columnConfig): node | | hàm nhận vào 4 parameters và trả về các Cell cho footer
+`renderHeaderCells` | func(row, index, visibleColumnsLength, columnConfig): node | | hàm nhận vào 4 parameters và trả về các Cell cho header
 `columnConfig` | array of columnConfigShape <sup>(*)</sup> | | config về thứ cột, ... 
 `customRenderMap` | `Map` of custom render | | 
 `filterComponent` | node | | phần React node render filter
@@ -31,7 +31,10 @@ Name | Type | Default | Description
 `buttons` | node |  | buttons ở bottom drawer
 `canEditColumnConfig` | boolean | `false` | `true` thì hiện nút sắp xếp cột
 `canGroupByColumn` | boolean | `false` | `true` thì hiện dropdown chọn gom nhóm theo cột
-`onGroupByColumn` | func |  | callback sau khi chọn gom nhóm theo cột
+`onGroupByColumn` | func(ids) |  | callback sau khi chọn gom nhóm theo cột
+`defaultGroupByColumns` | array of number | | list id mặc định của các cột được gom nhóm theo
+`onShowingColumnsChanged` | func(ids) | | callback sau khi column config được thay đổi (được dùng để get lại data nếu cần)
+`reloadAfterColumnConfigChanged` | bool | `true` | `true` thì sẽ render lại table sau khi thay đổi column config, set là `false` nếu muốn get lại dữ liệu mỗi khi thay đổi column 
 
 <sup>(*)</sup>
 ```jsx
