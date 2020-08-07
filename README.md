@@ -25,7 +25,6 @@ Name | Type | Default | Description
 `onClickSearch` | func | | callback khi nhấn nút search
 `onSort` | props này của Table (xem [Table](https://github.com/i3team/i3-table))
 `currentOrderBy` | props này của Table (xem [Table](https://github.com/i3team/i3-table))
-`getRowKey`| props này của Table (xem [Table](https://github.com/i3team/i3-table))
 `pageType` | number | | giá trị của enum EPageType
 `selectable` | bool | false | true thì sẽ handle checkbox và bottom drawer
 `buttons` | node |  | buttons ở bottom drawer
