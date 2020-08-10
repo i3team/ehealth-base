@@ -46,11 +46,14 @@ columnConfig: PropTypes.arrayOf(PropTypes.shape({
     index: PropTypes.number.isRequired, // thứ tự sắp xếp cột
     key: PropTypes.string.isRequired, // key từ object data
     title: PropTypes.string.isRequired, // tiêu đề cột
-    isVisible: PropTypes.bool.isRequired, // hiển thị
-    options: PropTypes.object // (1)
+    isVisible: PropTypes.bool, // (1) hiển thị
+    options: PropTypes.object // (2)
 })).isRequired
 ```
-(1) `options` (trước đó là `headCellProps`, chỉ là thêm trường `id`) chứa các props của `HeadCell` của `I3FullTable` và `id` của column `{id, ...headCellProps}`. `id` của column sẽ được lấy từ enum cho việc gom nhóm theo cột, theo đó, khi một table cần chức năng gom nhóm theo cột thì phải định nghĩa ra 1 enum (cả C# lẫn js) với giá trị là number đại diện cho column muốn group, 
+
+(1) `isVisible` là giá trị default thể hiện cột đó có được display hay ko, `false` thì ko được display, ngược lại `true` hoặc `null` thì display, chỉ khác là `null` thì KO ĐƯỢC edit 
+
+(2) `options` (trước đó là `headCellProps`, chỉ là thêm trường `id`) chứa các props của `HeadCell` của `I3FullTable` và `id` của column `{id, ...headCellProps}`. `id` của column sẽ được lấy từ enum cho việc gom nhóm theo cột, theo đó, khi một table cần chức năng gom nhóm theo cột thì phải định nghĩa ra 1 enum (cả C# lẫn js) với giá trị là number đại diện cho column muốn group, 
 
 Ở js thì tạo object enum trong object `ETableColumnId` ở file `enum.js`
 VD:
@@ -85,7 +88,7 @@ import { createColumn } from '~/general/tableConfig.js';
 // createColumn = (index, key, title, isVisible, options = null) => ({ index, key, title, isVisible, options });
 
 let _columnConfig = [
-    createColumn(1, 'id', 'ID', true, {
+    createColumn(1, 'id', 'ID', null, {
         id: ETableColumnId.Test.ConsumableId,
         sortable: true,
         orderBy: 'abc'
