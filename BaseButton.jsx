@@ -34,7 +34,7 @@ class BaseButton extends EHealthBaseConsumer {
                     margin={margin}
                     iconClassName={this.iconClassName()}
                     variant={this.variant()}
-                    onClick={this.onClick}
+                    onClick={this.onClick.bind(this)}
                 >
                     {this.text()}
                 </EHealthButton>
