@@ -341,7 +341,7 @@ class DeleteOrderButton extends BaseTableButton {
 ```
 
 ### BaseActionTableButton
-Tương tự (BaseTableButton)[#BaseTableButton] nhưng cần implement `getActionPoint() : int` và return về action point của button đó, `isItemApplicable` đã được implement sẵn.
+Tương tự [BaseTableButton](#BaseTableButton) nhưng cần implement `getActionPoint() : int` và return về action point của button đó, `isItemApplicable` đã được implement sẵn.
 VD
 ```jsx
 class DeleteButton extends BaseActionTableButton {
