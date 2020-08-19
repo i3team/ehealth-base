@@ -134,6 +134,91 @@ _customRenderMap.set('id', row => <b style={{color: 'red'}}>#{row.data.id}</b>)
 />
 ```
 
+# BaseButton
+[Code](./BaseButton.jsx)
+
+Chúng ta đã có [`BaseAction`](https://github.com/i3team/general#1-baseaction) được sử dụng khi muốn tập trung logic vào một component, nhưng cách render ở từng trường hợp sử dụng lại khác nhau
+
+Và đây là `BaseButton`, được sử dụng để implement một số Button có chức năng đặc biệt, được sử dụng nhiều lần và có một số logic chung
+
+Một số method cần chú ý (những method khác thì là cơ bản của button, ko đáng chú ý)
+- `isApplicable() : boolean` : abstract, return `true` thì được render
+
+<i>Sẽ được update thêm</i>
+
+Trong quá trình dev, `BaseButton` sẽ có nhiều implementation (component kế thừa nó) khác nhau được tạo ra
+
+## Một số implementation cơ bản
+
+<a name="BaseTableButton"/>
+
+### BaseTableButton
+[Code](./BaseTableButton.jsx)
+
+Là các nút được dùng để thực hiện thao tác với 1 list các object, VD: thao tác với các selected items ở Bottom drawer của TableComponent, các nút này sẽ thực hiện hành động trên các hàng được check ở table, tuy nhiên không có nghĩa là hàng nào được chọn thì cũng được apply hành động đó, các hàng được chọn sẽ được filter ra
+
+Một số method cần chú ý:
+- `isItemApplicable(item: object) : boolean` : abstract, return `true` thì hành động này sẽ tác động lên hàng đó, `false` thì bị "cho ra rìa"
+- `actionName() : string` : abstract, tên hành động VD như: Gửi, Duyệt, Trình ký, Hủy, Xóa, ...
+- `rowUnitName() : string` : virtual : tên đơn vị của hàng VD như: thuốc, ....
+
+###### Props
+Name | Type | Default | Description
+:--- | :--- | :--- | :---
+`selectedItems`* | array | `[]` | list các hàng đã được check ở Table
+`closeDrawer`* | func | `[]` | tắt bottom drawer
+`callback` | func | | `callback` được gọi sau khi hành động được thực hiện
+
+Ví dụ có một button là `Xóa đơn`, và điều kiện để một hàng (đơn) bị xóa là trạng thái là 2
+```jsx
+class DeleteOrderButton extends BaseTableButton {
+    variant() {
+        return "solid";
+    }
+    rowUnitName() {
+        return "Đơn";
+    }
+    actionName() {
+        return "Xóa";
+    }
+    isItemApplicable(order){
+        return order.status == 2;
+    }
+    _deleteOrders = () => {
+        const { selectedItems, callback } = this.props;
+        this.ajaxPost({
+            url: '~/DeleteOrders',
+            data: selectedItems,
+            success: (ack) => {
+                typeof callback === 'function' && callback(ack.data);
+            }
+        })
+    }
+    onClick() {
+        this._deleteOrders();
+    }
+}
+```
+
+### BaseActionTableButton
+Tương tự [BaseTableButton](#BaseTableButton) nhưng cần implement `getActionPoint() : int` và return về action point của button đó, `isItemApplicable` đã được implement sẵn.
+VD
+```jsx
+class DeleteButton extends BaseActionTableButton {
+    getActionPoint(){
+        return EActionPoint.Delete;
+    }
+    onClick(){
+        // delete
+    }
+    text(){
+        return 'Xóa'
+    }
+}
+```
+
+
+
 # Model C# trả về để render table
 Đối với table có paging thì trả về ```Pagination<T>```, nếu không thì trả về ```List<T>```.
 
@@ -268,93 +353,6 @@ getKey là một function trả về string với param đầu vô là object da
 
             return result;
         }
-```
-
-
-
-
-
-# BaseButton
-[Code](./BaseButton.jsx)
-
-Chúng ta đã có [`BaseAction`](https://github.com/i3team/general#1-baseaction) được sử dụng khi muốn tập trung logic vào một component, nhưng cách render ở từng trường hợp sử dụng lại khác nhau
-
-Và đây là `BaseButton`, được sử dụng để implement một số Button có chức năng đặc biệt, được sử dụng nhiều lần và có một số logic chung
-
-Một số method cần chú ý (những method khác thì là cơ bản của button, ko đáng chú ý)
-- `isApplicable() : boolean` : abstract, return `true` thì được render
-
-<i>Sẽ được update thêm</i>
-
-Trong quá trình dev, `BaseButton` sẽ có nhiều implementation (component kế thừa nó) khác nhau được tạo ra
-
-## Một số implementation cơ bản
-
-<a name="BaseTableButton"/>
-
-### BaseTableButton
-[Code](./BaseTableButton.jsx)
-
-Là các nút được dùng để thực hiện thao tác với 1 list các object, VD: thao tác với các selected items ở Bottom drawer của TableComponent, các nút này sẽ thực hiện hành động trên các hàng được check ở table, tuy nhiên không có nghĩa là hàng nào được chọn thì cũng được apply hành động đó, các hàng được chọn sẽ được filter ra
-
-Một số method cần chú ý:
-- `isItemApplicable(item: object) : boolean` : abstract, return `true` thì hành động này sẽ tác động lên hàng đó, `false` thì bị "cho ra rìa"
-- `actionName() : string` : abstract, tên hành động VD như: Gửi, Duyệt, Trình ký, Hủy, Xóa, ...
-- `rowUnitName() : string` : virtual : tên đơn vị của hàng VD như: thuốc, ....
-
-###### Props
-Name | Type | Default | Description
-:--- | :--- | :--- | :---
-`selectedItems`* | array | `[]` | list các hàng đã được check ở Table
-`closeDrawer`* | func | `[]` | tắt bottom drawer
-`callback` | func | | `callback` được gọi sau khi hành động được thực hiện
-
-Ví dụ có một button là `Xóa đơn`, và điều kiện để một hàng (đơn) bị xóa là trạng thái là 2
-```jsx
-class DeleteOrderButton extends BaseTableButton {
-    variant() {
-        return "solid";
-    }
-    rowUnitName() {
-        return "Đơn";
-    }
-    actionName() {
-        return "Xóa";
-    }
-    isItemApplicable(order){
-        return order.status == 2;
-    }
-    _deleteOrders = () => {
-        const { selectedItems, callback } = this.props;
-        this.ajaxPost({
-            url: '~/DeleteOrders',
-            data: selectedItems,
-            success: (ack) => {
-                typeof callback === 'function' && callback(ack.data);
-            }
-        })
-    }
-    onClick() {
-        this._deleteOrders();
-    }
-}
-```
-
-### BaseActionTableButton
-Tương tự [BaseTableButton](#BaseTableButton) nhưng cần implement `getActionPoint() : int` và return về action point của button đó, `isItemApplicable` đã được implement sẵn.
-VD
-```jsx
-class DeleteButton extends BaseActionTableButton {
-    getActionPoint(){
-        return EActionPoint.Delete;
-    }
-    onClick(){
-        // delete
-    }
-    text(){
-        return 'Xóa'
-    }
-}
 ```
 
 
