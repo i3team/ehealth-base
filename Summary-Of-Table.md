@@ -76,14 +76,14 @@ var query = (from consumable in context.Consumables
 ```cshaph
 var data = await query.DynamicGroup(searchModel);
 ```
--Xử lý thêm data này (nếu cần) và trả về controller;
+- Xử lý thêm data này (nếu cần) và trả về controller;
 
 ### c) Controller nhận ```List<ModelRaw>``` từ ServiceHost, tiến hành group dữ liệu theo header
 ```cshaph
 result.Data.DataList.GroupActionHeader(searchModel.GroupByColumns, searchModel.ShowingColumns, ETableDataType.Consumable, i => i.BatchList)
 ```
 
-Parameters của hàm GroupHeader
+Parameters của hàm GroupActionHeader
 Name | Type | Description
 :--- | :--- | :---
 `dataList` | List<T> | List data raw
