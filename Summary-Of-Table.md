@@ -1,7 +1,8 @@
 # Quy trình get, render, xử lý data đối với table
 ## 1. Get PageModel (thường sử dụng đối với các trang mà đối tượng chính là bảng)
 a) Viết API get PageModel chứa thông tin:
--- SearchModel mặc định (object từ class kế thừa từ BaseTableFilterModel)
+
+- SearchModel mặc định (object từ class kế thừa từ BaseTableFilterModel)
 ```cshaph
  public class BaseTableFilterModel : Pagination 
     {
@@ -17,17 +18,17 @@ a) Viết API get PageModel chứa thông tin:
         }
     }
 ```
--- Dữ liệu cho các Dropdown phục vụ cho filter component
--- Dữ liệu trống của table
--- ...
+- Dữ liệu cho các Dropdown phục vụ cho filter component
+- Dữ liệu trống của table
+- ...
 b) Gọi ajax đến api phía trên ở component Page
 
 ## 2. Viết api lấy dữ liệu cho bảng
 ### a) Parameter đầu vô của controller là searchModel
 ### b) Controller gọi lên ServiceHost, truyền searchModel lên. Để viết hàm trên ServiceHost thì cần làm các bước sau:
--- Tạo ModelRaw (viết trong project EHealth.ViewModel/Table) chứa tất cả các trường mà table cần, cần gắn attribule [Table] cho class
--- Tạo StatisticFigure cho class này (viết trong EHealth.ServiceHost/StatisticFigure): một số trường sẽ được group lấy SUM, MIN, MAX, AVERAGE tùy thuộc vào sự ẩn hiện của các trường khác (ví dụ số lượng thuốc,...)
--- Tạo ```IQueryable<ModelRaw>```, đảm bảo tất cả các trường select lên phải là value type
+- Tạo ModelRaw (viết trong project EHealth.ViewModel/Table) chứa tất cả các trường mà table cần, cần gắn attribule [Table] cho class
+- Tạo StatisticFigure cho class này (viết trong EHealth.ServiceHost/StatisticFigure): một số trường sẽ được group lấy SUM, MIN, MAX, AVERAGE tùy thuộc vào sự ẩn hiện của các trường khác (ví dụ số lượng thuốc,...)
+- Tạo ```IQueryable<ModelRaw>```, đảm bảo tất cả các trường select lên phải là value type
 ```cshaph
 var query = (from consumable in context.Consumables
                          join parentConsumable in context.Consumables on consumable.ParentId equals parentConsumable.Id into p1
@@ -70,11 +71,11 @@ var query = (from consumable in context.Consumables
                              HospitalName = ""
                          });
 ```
--- Đưa query này vào hàm DynamicGroup để tiến hành sort, phân trang, group dữ liệu trên raw data,...
+- Đưa query này vào hàm DynamicGroup để tiến hành sort, phân trang, group dữ liệu trên raw data,...
 ```cshaph
 var data = await query.DynamicGroup(searchModel);
 ```
---Xử lý thêm data này (nếu cần) và trả về controller;
+-Xử lý thêm data này (nếu cần) và trả về controller;
 
 ### c) Controller nhận ```List<ModelRaw>``` từ ServiceHost, tiến hành group dữ liệu theo header
 ```cshaph
