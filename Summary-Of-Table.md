@@ -20,7 +20,7 @@ a) Viết API get PageModel chứa thông tin:
 ```
 - Dữ liệu cho các Dropdown phục vụ cho filter component
 - Dữ liệu trống của table
-- ...
+- ... v.v...
 b) Gọi ajax đến api phía trên ở component Page
 
 ## 2. Viết api lấy dữ liệu cho bảng
