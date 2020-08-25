@@ -103,6 +103,8 @@ Name | Type | Description
 :--- | :--- | :---
 `searchModel` | object | searchModel phải kế thừa BaseTableFilterModel (c#). Nếu có các phương thức sort, group, ẩn hiện cột thì bắt buộc phải truyền
 `getData`| func | Hàm get lại dữ liệu cho bảng
+`isPaging`| bool | Có phân trang hay không
+`fullData`| object | Nếu isPaging == true thì bắt buộc phải truyền, đây là pagination<T> từ db trả về
 onGroupByColumn, onShowingColumnsChanged, onSort, reloadAfterColumnConfigChanged bị vô hiệu hóa
 các props còn lại sẽ được truyền nguyên vẹn vào TableComponent
 
