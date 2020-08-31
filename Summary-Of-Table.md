@@ -382,4 +382,49 @@ class ConsumableListTable extends EHealthBaseConsumer {
 ```
 
 
+# Đối với những trường hợp cần sử dụng table cơ bản (không cần showingColumns, groupByColumns,...) thì dùng EHealthBasicTable
+Name | Type | IsRequired | Description
+:--- | :--- | :--- | :---
+`data` | array | true | list dữ liệu
+`pageIndex`| number |  | trang hiện tại
+`totalPage`| number | | tổng số trang, nếu totalPage và pageIndex khác undefined thì xuất hiện paging
+`onChangePage`| func |  | hàm chuyển trang, param đầu vào là pageIndex mới
+`headRow`| func | true | hàm không nhận param, return về <TableRow> chứa nhiều <TableCell> (các cell render ở header)
+`bodyRow`| func | true | hàm nhận vào item, index (truy ra từ data), return về <TableRow> chứa nhiều <TableCell>, nếu muốn return nhiều <TableCell> thì bao bằng <React.Fragment>
+Tất cả các props còn lại tương tự I3BasicTable
+ 
+ Ví dụ
+ ```js
+              <EHealthBasicTable
+                    data={data.tableData.dataList}
+                    pageIndex={data.tableData.pageIndex}
+                    totalPage={data.tableData.totalPage}
+                    onChangePage={(newPageIndex) => { console.log(newPageIndex) }}
+                    headRow={() => {
+                        return (
+                            <TableRow>
+                                {this._columnConfig.map((i, index) => {
+                                    return <TableCell>{i.title}</TableCell>
+                                })}
+                            </TableRow>
+                        );
+                    }}
 
+                    bodyRow={(item, index) => {
+                        return (
+                            <React.Fragment>
+                                <TableRow>
+                                    {this._columnConfig.map((i, cIndex) => {
+                                        return <TableCell>{index}</TableCell>
+                                    })}
+                                </TableRow>
+                                <TableRow>
+                                    {this._columnConfig.map((i, cIndex) => {
+                                        return <TableCell>{index}</TableCell>
+                                    })}
+                                </TableRow>
+                            </React.Fragment>
+                        );
+                    }}
+                />
+ ```
