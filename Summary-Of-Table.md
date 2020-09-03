@@ -389,8 +389,8 @@ Name | Type | IsRequired | Description
 `pageIndex`| number |  | trang hiện tại
 `totalPage`| number | | tổng số trang, nếu totalPage và pageIndex khác undefined thì xuất hiện paging
 `onChangePage`| func |  | hàm chuyển trang, param đầu vào là pageIndex mới
-`headRow`| func | true | hàm không nhận param, return về <TableRow> chứa nhiều <TableCell> (các cell render ở header)
-`bodyRow`| func | true | hàm nhận vào item, index (truy ra từ data), return về <TableRow> chứa nhiều <TableCell>, nếu muốn return nhiều <TableCell> thì bao bằng <React.Fragment>
+`headRow`| func | true | hàm không nhận param, return về <TableRow> chứa nhiều <I3HeadCell> (các cell render ở header)
+`bodyRow`| func | true | hàm nhận vào item, index (truy ra từ data), return về <TableRow> chứa nhiều <I3BodyCell>, nếu muốn return nhiều <TableCell> thì bao bằng <React.Fragment>
 Tất cả các props còn lại tương tự I3BasicTable
  
  Ví dụ
@@ -400,13 +400,18 @@ Tất cả các props còn lại tương tự I3BasicTable
                     pageIndex={data.tableData.pageIndex}
                     totalPage={data.tableData.totalPage}
                     onChangePage={(newPageIndex) => { console.log(newPageIndex) }}
+                    sortable
+                    onSort={(direction, columnIndex) => {
+                        console.log(direction, columnIndex)
+                    }}
+                    currentOrderBy={"abc1"}
                     headRow={() => {
                         return (
-                            <TableRow>
+                            <React.Fragment>
                                 {this._columnConfig.map((i, index) => {
-                                    return <TableCell>{i.title}</TableCell>
+                                    return <I3HeadCell sortable orderBy={"abc" + index}>{i.title}</I3HeadCell>
                                 })}
-                            </TableRow>
+                            </React.Fragment>
                         );
                     }}
 
@@ -415,12 +420,12 @@ Tất cả các props còn lại tương tự I3BasicTable
                             <React.Fragment>
                                 <TableRow>
                                     {this._columnConfig.map((i, cIndex) => {
-                                        return <TableCell>{index}</TableCell>
+                                        return <I3BodyCell>{index}</I3BodyCell>
                                     })}
                                 </TableRow>
                                 <TableRow>
                                     {this._columnConfig.map((i, cIndex) => {
-                                        return <TableCell>{index}</TableCell>
+                                        return <I3BodyCell>{index}</I3BodyCell>
                                     })}
                                 </TableRow>
                             </React.Fragment>
