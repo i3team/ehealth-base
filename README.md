@@ -232,7 +232,7 @@ Chú ý: các cách để class kế thừa từ IActionItem
 #### a) Các class đang có sẵn [DataContract], [DataMember]: kế thừa từ BaseDataMemberActionItem
 Class có [DataContract] nên được kế thừa từ class có [DataContract] nên đã tạo sẵn class BaseDataMemberActionItem để kế thừa cho nhanh. Class này đã implement List EActionPoint từ IActionItem và gắn [DataMember] cho trường đó.
 
-Đối với những class POCO thì tạo file partial và kế thừa.
+KHÔNG DÙNG CLASS POCO ĐỂ LÀM VIEW MODEL
 
 #### b) Các class không có  [DataContract], [DataMember]: kế thừa từ BaseActionItem
 
